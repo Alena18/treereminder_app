@@ -3,7 +3,7 @@ from .models import Note
 
 class NoteAdmin(admin.ModelAdmin):
     # Display 'user', 'text', 'created_at', 'due_date', and user email
-    list_display = ('author', 'get_username', 'get_email', 'text', 'created_at', 'due_date')
+    list_display = ('author', 'get_username', 'get_email', 'content', 'created_at', 'due_date')
     
     # Custom method to show the username in the admin
     def get_username(self, obj):
@@ -19,7 +19,7 @@ class NoteAdmin(admin.ModelAdmin):
     list_filter = ('author', 'due_date')
     
     # Make 'text' field searchable
-    search_fields = ('text',)
+    search_fields = ('content',)
 
     # Ordering reminders by creation date (newest first)
     ordering = ('-created_at',)

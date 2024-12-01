@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ["*","fdchsc-8000.csb.app"]
 CSRF_TRUSTED_ORIGINS = [
     'https://fymsnd-8000.csb.app',
     'https://fdchsc-8000.csb.app',
+    'http://127.0.0.1:5173',
     # Add other trusted origins as needed
 ]
 
@@ -103,9 +104,13 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'phndpuls',  # Your database name
+        'USER': 'phndpuls',  # Your database username
+        'PASSWORD': 'zoSq1tGOwD2XZlHna_TGWPeQm6I40Urn',  # Your database password
+        'HOST': 'kandula.db.elephantsql.com',  # Your database host
+        'PORT': '5432',  # Your database port
     }
 }
 
