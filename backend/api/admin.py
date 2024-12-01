@@ -7,12 +7,12 @@ class NoteAdmin(admin.ModelAdmin):
     
     # Custom method to show the username in the admin
     def get_username(self, obj):
-        return obj.user.username
+        return obj.author.username
     get_username.short_description = 'Username'  # This will change the column header to 'Username'
 
     # Custom method to show the user's email in the admin
     def get_email(self, obj):
-        return obj.user.email
+        return obj.author.email
     get_email.short_description = 'Email'  # This will change the column header to 'Email'
 
     # Filter reminders by user

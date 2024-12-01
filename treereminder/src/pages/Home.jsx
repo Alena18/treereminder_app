@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import api from "../api";
-import Note from "../components/Note";
+import { useState } from "react";
 //this is a test to push
 //and see if I can commit
 export default function App() {
