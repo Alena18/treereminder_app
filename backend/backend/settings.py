@@ -9,48 +9,44 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import environ
 
-# Initialize environment variables
-env = environ.Env()
-environ.Env.read_env()  # Reads the .env file
-
-# Use environment variables
-DEBUG = env.bool("DEBUG", default=False)
-SECRET_KEY = env("DJANGO_SECRET_KEY")
-DATABASES = {
-    'default': env.db(),
-}
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from .env file
 load_dotenv()
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-q6e5y@*ta0=^g*v)r=2bs19qd1k*u(whp9-!m41=)^crk+#g*j"
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-q6e5y@*ta0=^g*v)r=2bs19qd1k*u(whp9-!m41=)^crk+#g*j")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEVELOPMENT' in os.environ
+DEBUG = os.getenv("DEBUG", "False") == "True"  # Set this in .env file for development
 
-ALLOWED_HOSTS = ["*","treereminder-da7f77a3e9c2.herokuapp.com"]
+ALLOWED_HOSTS = [
+    "*",
+    "treereminder-da7f77a3e9c2.herokuapp.com",
+    "www.treereminder-da7f77a3e9c2.herokuapp.com"
+]
+
+# CORS Configuration
+CORS_ALLOWED_ORIGINS = [
+    "https://treereminder-da7f77a3e9c2.herokuapp.com",
+    # Add other trusted origins as needed
+]
+CORS_ALLOW_ALL_ORIGINS = False  # Set to False to limit origins
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
-    '*',
-    'https://treereminder-da7f77a3e9c2.herokuapp.com',
+    "https://treereminder-da7f77a3e9c2.herokuapp.com",
     # Add other trusted origins as needed
 ]
 
-
+# REST Framework settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
@@ -60,13 +56,13 @@ REST_FRAMEWORK = {
     ],
 }
 
+# JWT Settings
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -74,7 +70,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "api",
+    "api",  # Your app (replace with your actual app name)
     "rest_framework",
     "corsheaders",
 ]
@@ -110,25 +106,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+# Database configuration
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'phndpuls',  # Your database name
-        'USER': 'phndpuls',  # Your database username
-        'PASSWORD': 'zoSq1tGOwD2XZlHna_TGWPeQm6I40Urn',  # Your database password
-        'HOST': 'kandula.db.elephantsql.com',  # Your database host
-        'PORT': '5432',  # Your database port
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "phndpuls"),
+        "USER": os.getenv("DB_USER", "phndpuls"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "zoSq1tGOwD2XZlHna_TGWPeQm6I40Urn"),
+        "HOST": os.getenv("DB_HOST", "kandula.db.elephantsql.com"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
-
 # Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -144,39 +134,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
-# Define the location for collected static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Static URL that will be used in HTML files
-STATIC_URL = '/static/'
+# Static files (CSS, JavaScript, Images)
+# The location for collected static files
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_URL = "/static/"
 
 # Optional: Additional directories for static files (e.g., React build)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Your app's static files
-    os.path.join(BASE_DIR, 'treereminder', 'build', 'static'),  # If you have React build files
+    os.path.join(BASE_DIR, "static"),  # Your app's static files
+    os.path.join(BASE_DIR, "treereminder", "build", "static"),  # If you have React build files
 ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = "static/"
-
 # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
