@@ -145,6 +145,17 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Define the location for collected static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Static URL that will be used in HTML files
+STATIC_URL = '/static/'
+
+# Optional: Additional directories for static files (e.g., React build)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Your app's static files
+    os.path.join(BASE_DIR, 'treereminder', 'build', 'static'),  # If you have React build files
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
