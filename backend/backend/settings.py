@@ -9,11 +9,15 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
+import dj_database_url
+if os.path.isfile('env.py'):
+    import env
+from pathlib import Path
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-import os
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,15 +26,16 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-q6e5y@*ta0=^g*v)r=2bs19qd1k*u(whp9-!m41=)^crk+#g*j")
+SECRET_KEY = os.environ.get('SECRET_KEY', '')"django-insecure-q6e5y@*ta0=^g*v)r=2bs19qd1k*u(whp9-!m41=)^crk+#g*j")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'DEVELOPMENT' in os.environ # Set this in .env file for development
+DEBUG = 'DEVELOPMENT' in os.environ  # Set this in .env file for development
 
 ALLOWED_HOSTS = [
-    "*",
-    "treereminder-da7f77a3e9c2.herokuapp.com",
-    "www.treereminder-da7f77a3e9c2.herokuapp.com"
+    '*',
+    'treereminder-da7f77a3e9c2.herokuapp.com',
+    'www.treereminder-da7f77a3e9c2.herokuapp.com',
+    'localhost'
 ]
 
 # CORS Configuration
@@ -86,8 +91,8 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = "backend.urls"
-
+ROOT_URLCONF = "backend.backend.urls"
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -104,7 +109,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "backend.wsgi.application"
+WSGI_APPLICATION = "backend.backend.wsgi.application"
 
 # Database configuration
 DATABASES = {
@@ -142,8 +147,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # The location for collected static files
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_URL = "/static/"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Optional: Additional directories for static files (e.g., React build)
 STATICFILES_DIRS = [
