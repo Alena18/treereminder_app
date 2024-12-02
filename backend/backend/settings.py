@@ -18,6 +18,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 
 # Load environment variables from .env file
 load_dotenv()
