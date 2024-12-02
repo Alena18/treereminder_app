@@ -30,12 +30,11 @@ SECRET_KEY = "django-insecure-q6e5y@*ta0=^g*v)r=2bs19qd1k*u(whp9-!m41=)^crk+#g*j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*","fdchsc-8000.csb.app"]
+ALLOWED_HOSTS = ["*","treereminder-da7f77a3e9c2.herokuapp.com"]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://fymsnd-8000.csb.app',
-    'https://fdchsc-8000.csb.app',
-    'http://127.0.0.1:5173',
+    '*',
+    'https://treereminder-da7f77a3e9c2.herokuapp.com',
     # Add other trusted origins as needed
 ]
 
