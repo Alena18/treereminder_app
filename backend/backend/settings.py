@@ -9,6 +9,18 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import environ
+
+# Initialize environment variables
+env = environ.Env()
+environ.Env.read_env()  # Reads the .env file
+
+# Use environment variables
+DEBUG = env.bool("DEBUG", default=False)
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+DATABASES = {
+    'default': env.db(),
+}
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
@@ -28,7 +40,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-q6e5y@*ta0=^g*v)r=2bs19qd1k*u(whp9-!m41=)^crk+#g*j"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ["*","treereminder-da7f77a3e9c2.herokuapp.com"]
 
